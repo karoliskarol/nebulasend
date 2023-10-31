@@ -1,0 +1,7 @@
+RewriteEngine On
+
+RewriteRule ^api/(.*) /projects/nebulasend/backend/index.php [L]
+
+#RewriteBase /
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule ^(.*)$ projects/nebulasend/frontend/index.php [L,QSA]

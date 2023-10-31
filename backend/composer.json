@@ -1,0 +1,19 @@
+{
+    "name": "kaspa/backend",
+    "autoload": {
+        "psr-4": {
+            "Kaspa\\Backend\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Karolis Kasparavičius",
+            "email": "118920577+karoliskarol@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.8",
+        "robinvdvleuten/ulid": "^5.0",
+        "html2text/html2text": "^4.3"
+    }
+}

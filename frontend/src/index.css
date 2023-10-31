@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Outfit&display=swap');
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: theme('colors.light');
+}
+
+
+header a,
+button {
+  transition: color 0.4s ease-in-out;
+}
+
+.hover-opacity {
+  transition: opacity 0.3s ease-in-out;
+}
+
+header a {
+  transition: transform 0.4s ease-in-out;
+}
+
+header a:hover {
+  color: rgba(255, 255, 255, 0.4) !important;
+  transform: scale(0.9) skewX(5deg) translate(0, 3px);
+}
+
+aside label div:hover {
+  color: white;
+}
+
+button:hover {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.hover-opacity:hover {
+  opacity: 0.85;
+}
+
+header.scrolled a:hover {
+  color: theme('colors.primary') !important;
+}
+
+
+header {
+  transition: background-color 0.5s ease-in-out;
+}
+
+.welcome {
+  position: relative;
+  padding: 150px 0 180px;
+  background-image: url(./assets/images/bg.jpg);
+  background-size: cover 0;
+  z-index: 2;
+}
+
+.welcome .auth-card {
+  @apply bg-light p-6 rounded-xl shadow-2xl font-bold opacity-90 w-80;
+}
+
+input,
+textarea {
+  @apply bg-gray-50 border border-gray-300 text-gray-800 w-full rounded-xl p-2 placeholder-gray-400 text-sm font-thin;
+}
+
+button,
+.button {
+  @apply rounded-lg bg-blue-800 py-2 text-blue-100 mx-auto block w-full font-thin mb-6;
+}
+
+.additional-mx {
+  @apply mx-6 md:mx-12;
+}
+
+.modal-content {
+  @apply mt-4;
+}
+
+a {
+  @apply cursor-pointer;
+}
+
+.welcome * {
+  z-index: 1;
+}
+
+.welcome>.blue-bg {
+  background-image: linear-gradient(45deg, rgb(4 4 58 / 85%), rgb(18 21 179 / 85%));
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  margin: 0;
+}
+
+footer {
+  background-color: rgb(18 21 179 / 85%);
+}
+
+.recaptcha {
+  transform: scale(0.9);
+  transform-origin: 0 0;
+}
+
+.right-side>.content {
+  height: calc(100% - 56px);
+  @apply absolute overflow-y-auto w-full;
+}
+
+input[type="checkbox"] {
+  border: 1px solid red !important;
+  border-radius: 7px;
+}
+
+input[type="checkbox"]:checked {
+  @apply bg-slate-200;
+}
+
+.email-iframe {
+  height: calc(100% - 136px);
+  width: calc(100% - 25px);
+  @apply absolute;
+}
+
+.emails-crop {
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: calc(100% - 184px);
+}
+
+.email-message .data {
+  width: calc(100% - 4rem);
+}
