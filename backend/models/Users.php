@@ -28,6 +28,10 @@ class Users extends Sql
     public function fetchColumnsById(string $column, string $id): mixed {
         return $this->fetch($column, 'id=:id', [':id' => $id]);
     }
+
+    public function updatePassword($id, $hashedPass) {
+        return $this->update('id=:id', [':pass' => $hashedPass], [':id' => $id]);
+    }
 }
 
 ?>

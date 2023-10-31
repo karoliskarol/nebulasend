@@ -10,8 +10,10 @@ const Header = () => {
                 </form>
                 <nav className="items-center gap-5 drop-shadow-2xl hidden sm:flex mr-6 md:mr-0">
                     <a className="hover:text-primary flex items-center text-sm">
-                        <Cog6ToothIcon className="w-4 h-4 mr-1" />
-                        Settings
+                        <label htmlFor="settings" className="cursor-pointer flex items-center">
+                            <Cog6ToothIcon className="w-4 h-4 mr-1" />
+                            Settings
+                        </label>
                     </a>
                     <a href="#" className="hover:text-primary text-sm cursor-pointer">
                         <label htmlFor="log-out" className="cursor-pointer flex items-center">

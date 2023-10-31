@@ -20,9 +20,9 @@ class Registration
             validateLength($nick, 3, 30, 'nickname');
             validateLength($pass, 8, 50, 'password');
 
-            self::validatePasswordsMatching($pass, $rpass);
+            validatePasswordsMatching($pass, $rpass);
+            validatePasswordFormat($pass);
             self::validateNicksFormat($nick);
-            self::validatePasswordFormat($pass);
             self::validateUserExec($nick, $users);
 
             self::validateRecaptcha();
@@ -36,28 +36,10 @@ class Registration
         }
     }
 
-    private static function validatePasswordsMatching(string $pass, string $rpass): void
-    {
-        if ($pass !== $rpass) {
-            throw new \Exception("Password's don't match.");
-        }
-    }
-
     private static function validateNicksFormat(string $nick): void
     {
         if (preg_match('/[^a-z0-9]/', $nick)) {
             throw new \Exception("Nickname can't contain any special characters. Only numbers and letters.");
-        }
-    }
-
-    private static function validatePasswordFormat(string $pass): void
-    {
-        $hasNumbers = preg_match('#[0-9]#', $pass);
-        $hasUpperLetters = preg_match('#[A-Z]#', $pass);
-        $hasSpecialSymbols = preg_match('/[^a-zA-Z0-9]/', $pass);
-
-        if (!($hasNumbers and $hasUpperLetters and $hasSpecialSymbols)) {
-            throw new \Exception("For security purposes, the password field must contain at least one uppercase character, one number, and one special character.");
         }
     }
 
@@ -88,7 +70,7 @@ class Registration
         $post_fields = array(
             'email' => $nick,
             'password' => $emailPassword,
-            'quota' => $emailQuota,
+            'quota' => $emailQuota
         );
 
         $context = stream_context_create(

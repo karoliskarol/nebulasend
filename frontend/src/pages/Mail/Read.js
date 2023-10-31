@@ -19,7 +19,7 @@ const Read = () => {
                 <div className="text-sm">{data.message.recipient} {`<${data.message.sent_by}>`}</div>
             </div>
             <div className="mt-6 text-slate-800">
-                <iframe src={uri} className="email-iframe" sandbox="allow-popups" sameorigin></iframe>
+                <iframe src={uri} className="email-iframe" sandbox="allow-popups"></iframe>
             </div>
         </div>
     );

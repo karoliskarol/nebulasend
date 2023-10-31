@@ -18,7 +18,7 @@ class Login
 
             self::validateUserExec($nick, $users);
             self::validateAmountOfAttempts();
-            self::validateIsPasswordCorrect($nick, $pass, $users);
+            validateIsPasswordCorrect($nick, $pass, $users);
 
             echo self::success($nick, $users);
         } catch (\Exception $e) {
@@ -33,21 +33,15 @@ class Login
         }
     }
 
-    private static function validateAmountOfAttempts() {
+    private static function validateAmountOfAttempts()
+    {
         $loginAttempts = new M\LoginAttempts;
 
-        if($loginAttempts->attempts() >= 6) {
+        if ($loginAttempts->attempts() >= 6) {
             throw new \Exception("Too many login attempts. Try later.");
         }
 
         $loginAttempts->create();
-    }
-
-    private static function validateIsPasswordCorrect(string $nick, string $pass, object $users): void
-    {
-        if (!password_verify($pass, $users->fetchColumnByNick('pass', $nick))) {
-            throw new \Exception("Wrong password.");
-        }
     }
 
     private static function success(string $nick, object $users): string
@@ -56,13 +50,11 @@ class Login
 
         $session = initAuth($ulid);
 
-        return json_encode(
-            (object) array(
-                'stat' => true,
-                'session' => $session,
-                'text' => 'Login is successfull.'
-            )
-        );
+        return json_encode([
+            'stat' => true,
+            'session' => $session,
+            'text' => 'Login is successfull.'
+        ]);
     }
 }
 

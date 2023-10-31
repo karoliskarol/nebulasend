@@ -11,7 +11,6 @@ class LogOutAllDevices
         try {
             preventIfNotAuth();
 
-            $users = new M\Users;
             $sessions = new M\Sessions;
 
             $sessions->deleteAllOfUser(getUserData('id')['id']);

@@ -14,5 +14,6 @@ Route::delete('/logOutAllDevices/', CA\LogOutAllDevices::class);
 Route::post('/newMessage/', CA\NewMessage::class);
 Route::get('/getMessages/', CA\GetMessages::class);
 Route::get('/read/', CA\Read::class);
+Route::put('/changePassword/', CA\ChangePassword::class);
 
 ?>

@@ -3,10 +3,11 @@ import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from '@tanstack/react-query';
 import ReCAPTCHA from "react-google-recaptcha";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Post from "../../../api/post";
 import Alert from "../../../components/ui/Alert";
+import { passValidation } from "../../../utils/yupValidations";
 
 const Registration = ({ setAction }) => {
     const [captcha, setCaptcha] = useState(null);
@@ -18,14 +19,7 @@ const Registration = ({ setAction }) => {
         nick: yup.string().min(3).max(30)
             .matches(/^[0-9aA-zZ\s]+$/, "Nick can't contain any special characters")
             .required(),
-
-        pass: yup.string().min(8).max(30)
-            .matches(/[0-9]/, 'Need atleast one number')
-            .matches(/[A-Z]/, 'Need atleast one uppercase letter')
-            .matches(/[^a-zA-Z0-9]/, 'Need atleast one special character')
-            .required(),
-
-        rpass: yup.string().oneOf([yup.ref("pass"), null], "Passwords don't match").required()
+            ...passValidation
     });
 
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -38,7 +32,9 @@ const Registration = ({ setAction }) => {
         mutate(inputs);
     }
 
-    if(data?.stat) navigate('/mail/inbox');
+    useEffect(() => {
+        if(data?.stat) navigate('/mail/inbox');
+    }, [data]);
 
     return (
         <div className="auth-card">

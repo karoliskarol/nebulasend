@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import Post from "../../../api/post";
 import Alert from "../../../components/ui/Alert";
+import { useEffect } from "react";
 
 const Login = ({ setAction }) => {
     const { data, mutate, isLoading, isError } = useMutation(['login'], inputs => Post('/login/', inputs));
@@ -17,7 +18,9 @@ const Login = ({ setAction }) => {
 
     const { register, handleSubmit } = useForm({ resolver: yupResolver(schema) });
 
-    if(data?.stat) navigate('/mail/inbox');
+    useEffect(() => {
+        if(data?.stat) navigate('/mail/inbox');
+    }, [data]);
 
     return (
         <div className="auth-card">

@@ -17,4 +17,9 @@ if (!(array_key_exists('http_x_requested_with', $headers) and $headers['http_x_r
     ));
 }
 
+if($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    $putData = file_get_contents('php://input');
+
+    define('PUT', (array) json_decode($putData));
+}
 ?>
