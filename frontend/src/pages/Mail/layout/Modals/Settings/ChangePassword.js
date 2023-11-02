@@ -7,7 +7,7 @@ import { passValidation } from "../../../../../utils/yupValidations";
 import Alert from "../../../../../components/ui/Alert";
 
 const ChangePassword = () => {
-    const { data, isError, mutate, isLoading } = useMutation(['changePassword'], inputs => Put('/changePassword/', inputs));
+    const { data, isError, mutate, isLoading } = useMutation(['changePassword'], inputs => Put('/settings/changePassword/', inputs));
 
     const schema = yup.object().shape({
         cpass: yup.string().required(),
@@ -25,19 +25,19 @@ const ChangePassword = () => {
             { isError && <Alert /> }
             { data && <Alert stat={data.stat} text={data.text} />}
 
-            <div className="my-4">
+            <div className="mt-0 mb-4">
                 <label htmlFor="cpass">Current password</label>
-                <input type="text" placeholder="Current password" id="cpass" {...register("cpass")} />
+                <input type="password" placeholder="Current password" id="cpass" {...register("cpass")} />
                 <p className="text-xs text-red-600 mt-2">{errors?.cpass?.message}</p>
             </div>
             <div className="my-4">
                 <label htmlFor="pass">New password</label>
-                <input type="text" placeholder="New password" id="pass" {...register("pass")} />
+                <input type="password" placeholder="New password" id="pass" {...register("pass")} />
                 <p className="text-xs text-red-600 mt-2">{errors?.pass?.message}</p>
             </div>
             <div className="my-4">
                 <label htmlFor="rpass">Repeat new password</label>
-                <input type="text" placeholder="Repeat new password" id="rpass" {...register("rpass")} />
+                <input type="password" placeholder="Repeat new password" id="rpass" {...register("rpass")} />
                 <p className="text-xs text-red-600 mt-2">{errors?.rpass?.message}</p>
             </div>
             <button>

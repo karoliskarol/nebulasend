@@ -10,9 +10,12 @@ class checkAuth
     {
         $sessions = new M\Sessions;
 
-        return json_encode((object) array(
-            'auth' => $sessions->exists()
-        ));
+        $auth = $sessions->exists();
+
+        return json_encode([
+            'auth' => $auth,
+            'data' => $auth ? getUserData('id, nick, recipient_name') : []
+        ]);
     }
 }
 

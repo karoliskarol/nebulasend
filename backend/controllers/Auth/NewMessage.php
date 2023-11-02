@@ -23,11 +23,13 @@ class NewMessage
             validateLength($subject, 3, 300, 'subject');
             validateIsEmpty($message, 'Message');
 
-            $data = getUserData('id, nick, email_pass');
+            $data = getUserData('id, nick, email_pass, recipient_name');
 
-            self::sendDevelopment($to, $subject, $message, $data);
-            self::sendProduction($to, $subject, $message, $data['nick']);
-            self::createEmail($to, $subject, $message, $data);
+            $args = [$to, $subject, $message, $data];
+
+            self::sendDevelopment(...$args);
+            self::sendProduction(...$args);
+            self::createEmail(...$args);
 
             echo self::success();
         } catch (\Exception $e) {
@@ -55,7 +57,7 @@ class NewMessage
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port = 465;
 
-        $mail->setFrom($data['nick'] . '@nebulasend.com', $data['nick']);
+        $mail->setFrom($data['nick'] . '@nebulasend.com', $data['recipient_name']);
         $mail->addAddress($to, $to);
 
         $mail->isHTML(true);
@@ -65,10 +67,10 @@ class NewMessage
         $mail->send();
     }
 
-    private static function sendProduction(string $to, string $subject, string $message, string $nick): void {
+    private static function sendProduction(string $to, string $subject, string $message, array $data): void {
         if(DEV_MODE) return;
 
-        if(!mail($to, $subject, $message, "From: $nick <$nick@nebulasend.com>\r\n")) {
+        if(!mail($to, $subject, $message, "From: ".$data['recipient_name']." <".$data['nick']."@nebulasend.com>\r\n")) {
             throw new Exception("Something went wrong while sending email.");
         }
     }

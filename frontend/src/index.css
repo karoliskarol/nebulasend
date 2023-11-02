@@ -143,3 +143,12 @@ input[type="checkbox"]:checked {
 .email-message .data {
   width: calc(100% - 4rem);
 }
+
+.modal-box::-webkit-scrollbar {
+  width: 0px;
+}
+
+.modal-box .fixed-alert {
+  @apply fixed top-2 left-6;
+  width: calc(100% - 3rem);
+}

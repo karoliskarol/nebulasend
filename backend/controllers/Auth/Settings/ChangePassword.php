@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers\Auth;
+namespace Controllers\Auth\Settings;
 
 use Models as M;
 
