@@ -22,16 +22,13 @@ class Users extends Sql
         return $this->count('nick=:nick', [':nick' => $nick]) > 0;
     }
 
+    public function countAll(): int
+    {
+        return $this->count('id', []);
+    }
+
     public function fetchColumnByNick(string $column, string $nick): mixed {
         return $this->fetchColumn($column, 'nick=:nick', [':nick' => $nick]);
-    }
-
-    public function fetchColumnByColumn(string $col, string $wcol, string $val): mixed {
-        return $this->fetchColumn($col, $wcol . '=:' . $wcol , [':'.$wcol => $val]);
-    }
-
-    public function fetchColumnsById(string $column, string $id): mixed {
-        return $this->fetch($column, 'id=:id', [':id' => $id]);
     }
 
     public function updatePassword(string $id, string $hashedPass) {

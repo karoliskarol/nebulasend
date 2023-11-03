@@ -24,6 +24,8 @@ class Sql
         }
     }
 
+    // ONLY USE THOSE BELOW IN YOUR MODELS 
+
     public function fetchColumn(string $select, string $where, array $array): mixed
     {
         $stmt = self::$conn->prepare("SELECT $select FROM $this->table " . self::handleWhere($where));
@@ -81,6 +83,22 @@ class Sql
         $stmt = self::$conn->prepare("DELETE FROM $this->table " . self::handleWhere($where));
         $stmt->execute($array);
     }
+
+    // ONLY USE THOSE BELOW IN YOUR CONTROLLERS
+
+    public function fetchColumnByColumn(string $col, string $wcol, string $val): mixed {
+        return $this->fetchColumn($col, $wcol . '=:' . $wcol , [':'.$wcol => $val]);
+    }
+
+    public function fetchColumnsById(string $columns, string $id): mixed {
+        return $this->fetch($columns, 'id=:id', [':id' => $id]);
+    }
+
+    public function fetchColumnById(string $column, string $id): mixed {
+        return $this->fetchColumn($column, 'id=:id', [':id' => $id]);
+    }
+
+    // IT'S PRIVATE BECAUSE IT'S MENT TO BE USED IN ONLY IN THIS CLASS
 
     private static function handleWhere(string $where): string
     {

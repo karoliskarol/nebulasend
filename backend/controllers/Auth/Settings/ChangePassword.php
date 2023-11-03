@@ -10,7 +10,7 @@ class ChangePassword
     {
         try {
             validatePut(['cpass','pass', 'rpass']);
-            preventIfNotAuth();
+            validateAuth();
 
             $users = new M\Users;
 

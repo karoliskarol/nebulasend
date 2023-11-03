@@ -9,7 +9,7 @@ class LogOutAllDevices
     public static function init()
     {
         try {
-            preventIfNotAuth();
+            validateAuth();
 
             $sessions = new M\Sessions;
 

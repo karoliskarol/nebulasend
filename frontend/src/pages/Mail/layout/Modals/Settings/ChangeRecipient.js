@@ -18,7 +18,8 @@ const ChangeRecipient = () => {
     });
 
     const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(schema)
+        resolver: yupResolver(schema),
+        defaultValues: { name: userData['recipient_name'] }
     });
 
     return (
@@ -30,7 +31,7 @@ const ChangeRecipient = () => {
 
             <div className="mt-0 mb-4">
                 <label htmlFor="recipient-name">Recipient name</label>
-                <input type="text" placeholder="Current password" id="recipient-name" value={userData['recipient_name']} {...register("name")} />
+                <input type="text" placeholder="Current password" id="recipient-name" {...register("name")} />
                 <p className="text-xs text-red-600 mt-2">{errors?.name?.message}</p>
             </div>
             <button className="mb-2">

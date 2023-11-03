@@ -13,7 +13,7 @@ class NewMessage
     {
         try {
             validatePost(['to', 'subject', 'message']);
-            preventIfNotAuth();
+            validateAuth();
 
             $to = $_POST['to'];
             $subject = $_POST['subject'];

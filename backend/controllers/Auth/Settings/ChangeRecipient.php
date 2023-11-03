@@ -10,7 +10,7 @@ class ChangeRecipient
     {
         try {
             validatePut(['name']);
-            preventIfNotAuth();
+            validateAuth();
 
             $users = new M\Users;
 

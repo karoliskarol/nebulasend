@@ -9,7 +9,7 @@ class Read
     public static function init()
     {
         try {
-            preventIfNotAuth();
+            validateAuth();
 
             $emailsMessages = new M\EmailsMessages;
 

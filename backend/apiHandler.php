@@ -10,16 +10,28 @@ $headers = getallheaders();
 
 if (!(array_key_exists('http_x_requested_with', $headers) and $headers['http_x_requested_with'] === 'xmlhttprequest')) {
     http_response_code(403);
-    exit(json_encode((object) array(
-        'stat' => false,
-        'error' => 'Something went wrong.'
-    )
-    ));
+    exit(
+        json_encode(
+            (object) array(
+                'stat' => false,
+                'error' => 'Something went wrong.'
+            )
+        )
+    );
 }
 
-if($_SERVER['REQUEST_METHOD'] === 'PUT') {
-    $putData = file_get_contents('php://input');
 
-    define('PUT', (array) json_decode($putData));
+$rm = $_SERVER['REQUEST_METHOD'];
+
+if ($rm === 'PUT' OR $rm === 'DELETE') {
+    $requestData = file_get_contents('php://input');
+    $decodedData = json_decode($requestData, true);
+
+    if ($rm === 'PUT') {
+        define('PUT', $decodedData);
+    } elseif ($rm === 'DELETE') {
+        define('DELETE', $decodedData);
+    }
 }
+
 ?>

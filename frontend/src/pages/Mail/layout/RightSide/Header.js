@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon, Cog6ToothIcon, ArrowTopRightOnSquareIcon } from '@
 
 const Header = () => {
     return (
-        <header className="h-14 z-10 text-blue-800 bg-light shadow-md flex">
+        <header className="h-14 z-10 text-blue-800 bg-light shadow-sm flex">
             <div className="mx-auto px-6 w-full flex items-center justify-between">
                 <form className="relative flex w-2/4">
                     <input type="text" placeholder="Search email" className="bg-slate-200 border-none pr-9" />

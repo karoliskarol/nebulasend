@@ -37,7 +37,7 @@ aside label div:hover {
   color: white;
 }
 
-button:hover {
+button:hover, .button:hover {
   color: rgba(255, 255, 255, 0.6) !important;
 }
 

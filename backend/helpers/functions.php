@@ -28,6 +28,13 @@ function validatePut($requiredKeys, $err = 'Something went wrong.')
     }
 }
 
+function validateDelete($requiredKeys, $err = 'Something went wrong.')
+{
+    if (!hasKeys($requiredKeys, DELETE)) {
+        throw new \Exception($err);
+    }
+}
+
 function validateLength($string, $min, $max, $name)
 {
     $l = strlen($string);

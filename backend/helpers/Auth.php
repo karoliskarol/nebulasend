@@ -11,11 +11,11 @@ function initAuth($userUlid) {
     return $session;
 }
 
-function preventIfNotAuth() {
+function validateAuth() {
     $sessions = new Models\Sessions;
 
     if(!$sessions->exists()) {
-        throw new \Exception("You're not authenticated.");
+        throw new Exception("You're not authenticated.");
     }
 }
 
@@ -28,6 +28,14 @@ function getUserData($columns) {
     $data = $users->fetchColumnsById($columns, $id);
 
     return $data;
+}
+
+function validateRecordBelonging($ruid, $uid, $message = 'This record does not belong to you.') {
+    $uid = !$uid ? getUserData('id')['id'] : null;
+
+    if($ruid !== $uid) {
+        throw new Exception($message);
+    }
 }
 
 ?>

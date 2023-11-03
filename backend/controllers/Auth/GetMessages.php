@@ -3,13 +3,14 @@
 namespace Controllers\Auth;
 
 use Models as M;
+use Exception;
 
 class GetMessages
 {
     public static function init()
     {
         try {
-            preventIfNotAuth();
+            validateAuth();
 
             $emailsMessages = new M\EmailsMessages;
 
@@ -21,7 +22,7 @@ class GetMessages
             $messages = self::messages($emailsMessages, $data);
 
             echo self::success($messages);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             echo json_encode(['stat' => false, 'text' => $e->getMessage()]);
         }
     }
@@ -32,11 +33,16 @@ class GetMessages
         $password = EMAIL_PASS . $data['email_pass'];
         $hostname = '{mail.nebulasend.com:993/imap/ssl}INBOX';
 
-        $inbox = \imap_open($hostname, $username, $password) or die('Cannot connect to mail.nebulasend.com: ' . imap_last_error());
+        try {
+        $inbox = imap_open($hostname, $username, $password);
 
         $emails = imap_search($inbox, 'UNSEEN');
 
         return self::handleSmtpMessages($emails, $inbox, $data['id']);
+        } catch (\Error $e) {
+            http_response_code(500);
+            return [];
+        }
     }
 
     private static function handleSmtpMessages(mixed $emails, object $inbox, string $id): array
@@ -127,12 +133,9 @@ class GetMessages
     {
         $a = isset($_GET['a']) ? $_GET['a'] : 'inbox';
 
-        $email = $data['nick'] . '@nebulasend.com';
-        $userId = $data['id'];
-
         $arr = [
-            ':email' => $email,
-            ':userId' => $userId
+            ':email' => $data['nick'] . '@nebulasend.com',
+            ':userId' => $data['id']
         ];
 
         switch ($a) {
@@ -140,7 +143,7 @@ class GetMessages
                 $messages = $emailsMessages->important($arr);
                 break;
             case 'starred':
-                $messages = $emailsMessages->starred($email);
+                $messages = $emailsMessages->starred($arr);
                 break;
             case 'sent':
                 $messages = $emailsMessages->sent($arr);
