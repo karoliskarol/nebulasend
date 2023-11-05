@@ -7,13 +7,17 @@ import Message from "./Message";
 
 const Messages = ({ url, qKey }) => {
     const [messagesCount, setMessagesCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
 
-    const { data, isFetching, refetch, error } = useQuery([qKey], () => Get(url), {
-        refetchInterval: 10000,
-        refetchOnWindowFocus: true,
-        pageSize: 10,
-        currentPage: 2
-    });
+    const max = 10;
+
+    const { data, isFetching, refetch, error } = useQuery([qKey, currentPage],
+        () => Get(`${url}${qKey === 'inbox' ? '?' : '&'}page=${currentPage}`),
+        {
+            refetchInterval: 10000,
+            refetchOnWindowFocus: true,
+            keepPreviousData: true
+        });
 
     const render = () => {
         if (data?.emailsMessages && messagesCount > 0) {
@@ -33,6 +37,16 @@ const Messages = ({ url, qKey }) => {
         }
     }
 
+    const handlePagination = bool => {
+        if (isFetching || (currentPage * 5 >= data?.count && bool)) return;
+
+        if (bool) {
+            setCurrentPage(prev => prev + 1)
+        } else if (!(currentPage <= 1)) {
+            setCurrentPage(prev => prev - 1)
+        }
+    }
+
     useEffect(() => {
         if (data?.emailsMessages?.length) {
             setMessagesCount(data.emailsMessages.length);
@@ -41,7 +55,13 @@ const Messages = ({ url, qKey }) => {
 
     return (
         <>
-            <Menu refetch={refetch} isFetching={isFetching} />
+            <Menu
+                refetch={refetch}
+                isFetching={isFetching}
+                page={currentPage}
+                handlePagination={handlePagination}
+                data={data}
+            />
             {!error && render()}
         </>
     );

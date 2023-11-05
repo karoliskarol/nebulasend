@@ -21,34 +21,34 @@ class EmailsMessages extends Sql
         $this->delete('id=:id', [':id' => $id]);
     }
 
-    public function inbox(array $arr)
+    public function inbox(array $arr, int $start, int $max)
     {
-        return $this->fetchAll($this->selector, 'sent_to=:email AND user_id=:userId AND trash=0 ORDER BY id DESC ', $arr);
+        return $this->fetchAll($this->selector, "sent_to=:email AND user_id=:userId AND trash=0 ORDER BY id DESC LIMIT $start, $max", $arr);
     }
 
-    public function important(array $arr)
+    public function important(array $arr, string $aQ, int $start, int $max)
     {
-        return $this->fetchAll($this->selector, '(sent_by=:email OR sent_to=:email) AND user_id=:userId AND important=1 AND trash=0 ORDER BY id DESC ', $arr);
+        return $this->fetchAll($this->selector, "(sent_by=:email OR sent_to=:email) AND $aQ ORDER BY id DESC LIMIT $start, $max", $arr);
     }
 
-    public function starred($arr)
+    public function starred(array $arr, string $aQ, int $start, int $max)
     {
-        return $this->fetchAll($this->selector, '(sent_by=:email OR sent_to=:email) AND user_id=:userId AND starred=1 AND trash=0 ORDER BY id DESC ', $arr);
+        return $this->fetchAll($this->selector, "(sent_by=:email OR sent_to=:email) AND $aQ ORDER BY id DESC LIMIT $start, $max", $arr);
     }
 
-    public function sent(array $arr)
+    public function sent(array $arr, int $start, int $max)
     {
-        return $this->fetchAll($this->selector, 'sent_by=:email AND user_id=:userId AND trash=0 ORDER BY id DESC ', $arr);
+        return $this->fetchAll($this->selector, "sent_by=:email AND user_id=:userId AND trash=0 ORDER BY id DESC LIMIT $start, $max", $arr);
     }
 
-    public function all(array $arr)
+    public function all(array $arr, string $aQ, int $start, int $max)
     {
-        return $this->fetchAll($this->selector, '(sent_by=:email OR sent_to=:email) AND user_id=:userId AND trash=0 ORDER BY id DESC ', $arr);
+        return $this->fetchAll($this->selector, "(sent_by=:email OR sent_to=:email) AND $aQ ORDER BY id DESC LIMIT $start, $max", $arr);
     }
 
-    public function trash(array $arr)
+    public function trash(array $arr, string $aQ, int $start, int $max)
     {
-        return $this->fetchAll($this->selector, '(sent_by=:email OR sent_to=:email) AND user_id=:userId AND trash=1 ORDER BY id DESC ', $arr);
+        return $this->fetchAll($this->selector, "(sent_by=:email OR sent_to=:email) AND $aQ ORDER BY id DESC LIMIT $start, $max", $arr);
     }
 
     public function changeStatus(string $set, string $id): void {
@@ -65,6 +65,18 @@ class EmailsMessages extends Sql
 
     public function countReceived() {
         return $this->count("sent_to LIKE '%@nebulasend.com'", []);
+    }
+
+    public function countInbox(array $arr): int {
+        return $this->count("sent_to=:email AND user_id=:userId AND trash=0 ORDER BY id DESC", $arr);
+    }
+
+    public function countSentByUser(array $arr): int {
+        return $this->count("sent_by=:email AND user_id=:userId AND trash=0 ORDER BY id DESC", $arr);
+    }
+
+    public function countInList(array $arr, string $aQ): int {
+        return $this->count("(sent_by=:email OR sent_to=:email) AND $aQ", $arr);
     }
 }
 

@@ -134,12 +134,6 @@ input[type="checkbox"]:checked {
   @apply absolute;
 }
 
-.emails-crop {
-  white-space: nowrap;
-  overflow: hidden;
-  max-width: calc(100% - 184px);
-}
-
 .email-message .data {
   width: calc(100% - 4rem);
 }
@@ -151,4 +145,12 @@ input[type="checkbox"]:checked {
 .modal-box .fixed-alert {
   @apply fixed top-2 left-6;
   width: calc(100% - 3rem);
+}
+
+@responsive {
+  .emails-crop {
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: calc(100% - 184px);
+  }
 }

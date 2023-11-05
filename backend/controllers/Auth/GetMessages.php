@@ -19,9 +19,9 @@ class GetMessages
 
             self::createEmailMessages($smtpMessages, $emailsMessages);
 
-            $messages = self::messages($emailsMessages, $data);
+            list($messages, $count) = self::messages($emailsMessages, $data);
 
-            echo self::success($messages);
+            echo self::success($messages, $count);
         } catch (Exception $e) {
             echo json_encode(['stat' => false, 'text' => $e->getMessage()]);
         }
@@ -34,11 +34,11 @@ class GetMessages
         $hostname = '{mail.nebulasend.com:993/imap/ssl}INBOX';
 
         try {
-        $inbox = imap_open($hostname, $username, $password);
+            $inbox = imap_open($hostname, $username, $password);
 
-        $emails = imap_search($inbox, 'UNSEEN');
+            $emails = imap_search($inbox, 'UNSEEN');
 
-        return self::handleSmtpMessages($emails, $inbox, $data['id']);
+            return self::handleSmtpMessages($emails, $inbox, $data['id']);
         } catch (\Error $e) {
             http_response_code(500);
             return [];
@@ -140,32 +140,77 @@ class GetMessages
 
         switch ($a) {
             case 'important':
-                $messages = $emailsMessages->important($arr);
+                $selector = [$arr, 'user_id=:userId AND important=1 AND trash=0'];
+
+                $count = $emailsMessages->countInList(...$selector);
+
+                list($start, $max) = self::getStartMax($count);
+
+                $messages = $emailsMessages->important(...[...$selector, $start, $max]);
                 break;
             case 'starred':
-                $messages = $emailsMessages->starred($arr);
+                $selector = [$arr, 'user_id=:userId AND starred=1 AND trash=0'];
+
+                $count = $emailsMessages->countInList(...$selector);
+
+                list($start, $max) = self::getStartMax($count);
+
+                $messages = $emailsMessages->starred(...[...$selector, $start, $max]);
                 break;
             case 'sent':
-                $messages = $emailsMessages->sent($arr);
+                $count = $emailsMessages->countSentByUser($arr);
+
+                list($start, $max) = self::getStartMax($count);
+
+                $messages = $emailsMessages->sent($arr, $start, $max);
                 break;
             case 'all':
-                $messages = $emailsMessages->all($arr);
+                $selector = [$arr, 'user_id=:userId AND trash=0'];
+
+                $count = $emailsMessages->countInList(...$selector);
+
+                list($start, $max) = self::getStartMax($count);
+
+                $messages = $emailsMessages->all(...[...$selector, $start, $max]);
                 break;
             case 'trash':
-                $messages = $emailsMessages->trash($arr);
+                $selector = [$arr, 'user_id=:userId AND trash=1'];
+
+                $count = $emailsMessages->countInList(...$selector);
+
+                list($start, $max) = self::getStartMax($count);
+
+                $messages = $emailsMessages->trash(...[...$selector, $start, $max]);
                 break;
             default:
-                $messages = $emailsMessages->inbox($arr);
+                $count = $emailsMessages->countInbox($arr);
+
+                list($start, $max) = self::getStartMax($count);
+
+                $messages = $emailsMessages->inbox($arr, $start, $max);
                 break;
         }
 
-        return $messages;
+        return [$messages, $count];
     }
 
-    private static function success(array $messages): string
+    private static function getStartMax(int $records)
+    {
+        $page = isset($_GET['page']) ? (int) $_GET['page'] : '';
+
+        $max = 10;
+        $start = ($max * $page) - $max;
+
+        $max = ($start + $max) > $records ? $records - $start : $max;
+
+        return [$start, $max];
+    }
+
+    private static function success(array $messages, int $count): string
     {
         return json_encode([
             'stat' => true,
+            'count' => $count,
             'emailsMessages' => $messages
         ]);
     }
