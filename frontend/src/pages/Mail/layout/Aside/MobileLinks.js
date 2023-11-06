@@ -1,4 +1,4 @@
-import { InboxArrowDownIcon, BookmarkIcon, StarIcon, ArrowUturnRightIcon, EnvelopeIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { InboxArrowDownIcon, BookmarkIcon, StarIcon, ArrowUturnRightIcon, EnvelopeIcon, TrashIcon, Cog6ToothIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
 import { Link, useNavigate } from "react-router-dom";
 
 const MobileLinks = () => {
@@ -40,6 +40,20 @@ const MobileLinks = () => {
                 <label htmlFor="my-drawer" className="flex items-center">
                     <TrashIcon className="h-4 w-4 mr-3" />
                     Trash bin
+                </label>
+            </li>
+
+            <li className="mt-8 mb-4 flex items-center">
+                <label htmlFor="settings" className="flex items-center">
+                    <Cog6ToothIcon className="h-4 w-4 mr-3" />
+                    Settings
+                </label>
+            </li>
+
+            <li className="my-4 flex items-center">
+                <label htmlFor="log-out" className="flex items-center">
+                    <ArrowTopRightOnSquareIcon className="h-4 w-4 mr-3" />
+                    Log out
                 </label>
             </li>
         </>

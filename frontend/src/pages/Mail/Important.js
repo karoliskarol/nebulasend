@@ -1,7 +1,7 @@
 import Messages from "./layout/RightSide/Messages";
 
 const Important = () => {
-    return <Messages url="/getMessages/?a=important" qKey="important" />;
+    return <Messages qKey="important" />;
 }
 
 export default Important;

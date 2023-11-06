@@ -1,7 +1,11 @@
+import { useContext } from "react";
 import Links from "./Links";
 import MobileLinks from "./MobileLinks";
+import UserContext from "../../../../contexts/UserContext";
 
 const Content = ({ type = 'PC' }) => {
+    const userData = useContext(UserContext);
+
     return (
         <>
             <h2 className="my-6 uppercase text-2xl font-bold text-center text-white text-opacity-80">Nebulasend</h2>
@@ -14,7 +18,11 @@ const Content = ({ type = 'PC' }) => {
                         </div>
                     </label>
                 </li>
-                { type === 'PC' ? <Links /> : <MobileLinks /> }
+                {type === 'PC' ? <Links /> : <MobileLinks />}
+
+                <li className="my-8 text-xs flex items-center">
+                    {userData.nick}@nebulasend.com
+                </li>
             </ul>
         </>
     );

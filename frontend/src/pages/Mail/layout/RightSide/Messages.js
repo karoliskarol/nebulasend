@@ -1,18 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import { FaceFrownIcon } from "@heroicons/react/24/solid";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Menu from "./Menu";
 import Get from "../../../../api/get";
 import Message from "./Message";
+import RightSideContext from "../../../../contexts/RightSideContext";
+import constructUrl from "../../../../utils/constructUrl";
 
-const Messages = ({ url, qKey }) => {
+const Messages = ({ qKey }) => {
     const [messagesCount, setMessagesCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
+
+    const { searchValue } = useContext(RightSideContext);
 
     const max = 10;
 
     const { data, isFetching, refetch, error } = useQuery([qKey, currentPage],
-        () => Get(`${url}${qKey === 'inbox' ? '?' : '&'}page=${currentPage}`),
+        () => Get(constructUrl('/getMessages/', [
+            ['a', qKey], ['page', currentPage], ['search', searchValue]
+        ])),
         {
             refetchInterval: 10000,
             refetchOnWindowFocus: true,
@@ -53,6 +59,10 @@ const Messages = ({ url, qKey }) => {
         }
     }, [data]);
 
+    useEffect(() => {
+        refetch();
+    }, [searchValue]);
+
     return (
         <>
             <Menu
@@ -62,7 +72,9 @@ const Messages = ({ url, qKey }) => {
                 handlePagination={handlePagination}
                 data={data}
             />
+            <div className="mt-14 mb-2">
             {!error && render()}
+            </div>
         </>
     );
 }

@@ -5,7 +5,7 @@ import { useContext } from "react";
 import MessageContext from "../../../../../contexts/MessageContext";
 
 const Star = () => {
-    const { message, setMessage, qKey, set } = useContext(MessageContext);
+    const { message, setMessage, qKey } = useContext(MessageContext);
 
     const { data, mutate } = useMutation(['changeStarring'], id => Put('/changeStarring/', { id: id }).then(() => {
         message.starred = !message.starred;

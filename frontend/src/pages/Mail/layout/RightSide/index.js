@@ -1,16 +1,22 @@
 import Header from './Header';
 import MobileAside from '../Aside/MobileAside';
+import RightSideContext from "../../../../contexts/RightSideContext";
+import { useState } from 'react';
 
 const RightSide = ({ Outlet }) => {
-    return (
-        <div className="right-side relative h-screen w-screen">
-            <MobileAside />
-            <Header />
+    const [searchValue, setSearchValue] = useState('');
 
-            <div className="content h-screen">
-                {Outlet}
+    return (
+        <RightSideContext.Provider value={{ searchValue, setSearchValue }}>
+            <div className="right-side relative h-screen w-screen">
+                <MobileAside />
+                <Header />
+
+                <div className="content h-screen">
+                    {Outlet}
+                </div>
             </div>
-        </div>
+        </RightSideContext.Provider>
     );
 }
 

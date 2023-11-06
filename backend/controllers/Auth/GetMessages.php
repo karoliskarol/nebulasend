@@ -132,15 +132,19 @@ class GetMessages
     private static function messages(object $emailsMessages, array $data): array
     {
         $a = isset($_GET['a']) ? $_GET['a'] : 'inbox';
+        $search = isset($_GET['search']) ? "'%".$_GET['search']."%'" : '';
 
         $arr = [
             ':email' => $data['nick'] . '@nebulasend.com',
             ':userId' => $data['id']
         ];
 
+        //  OR subject LIKE $search OR sent_by LIKE $search OR sent_to LIKE $search
+        $like = !empty($search) ? "AND (message LIKE $search OR subject LIKE $search OR recipient LIKE $search)" : ''; 
+
         switch ($a) {
             case 'important':
-                $selector = [$arr, 'user_id=:userId AND important=1 AND trash=0'];
+                $selector = [$arr, 'user_id=:userId AND important=1 AND trash=0', $like];
 
                 $count = $emailsMessages->countInList(...$selector);
 
@@ -149,7 +153,7 @@ class GetMessages
                 $messages = $emailsMessages->important(...[...$selector, $start, $max]);
                 break;
             case 'starred':
-                $selector = [$arr, 'user_id=:userId AND starred=1 AND trash=0'];
+                $selector = [$arr, 'user_id=:userId AND starred=1 AND trash=0', $like];
 
                 $count = $emailsMessages->countInList(...$selector);
 
@@ -158,14 +162,14 @@ class GetMessages
                 $messages = $emailsMessages->starred(...[...$selector, $start, $max]);
                 break;
             case 'sent':
-                $count = $emailsMessages->countSentByUser($arr);
+                $count = $emailsMessages->countSentByUser($arr, $like);
 
                 list($start, $max) = self::getStartMax($count);
 
-                $messages = $emailsMessages->sent($arr, $start, $max);
+                $messages = $emailsMessages->sent($arr, $start, $max, $like);
                 break;
             case 'all':
-                $selector = [$arr, 'user_id=:userId AND trash=0'];
+                $selector = [$arr, 'user_id=:userId AND trash=0', $like];
 
                 $count = $emailsMessages->countInList(...$selector);
 
@@ -174,7 +178,7 @@ class GetMessages
                 $messages = $emailsMessages->all(...[...$selector, $start, $max]);
                 break;
             case 'trash':
-                $selector = [$arr, 'user_id=:userId AND trash=1'];
+                $selector = [$arr, 'user_id=:userId AND trash=1', $like];
 
                 $count = $emailsMessages->countInList(...$selector);
 
@@ -183,11 +187,11 @@ class GetMessages
                 $messages = $emailsMessages->trash(...[...$selector, $start, $max]);
                 break;
             default:
-                $count = $emailsMessages->countInbox($arr);
+                $count = $emailsMessages->countInbox($arr, $like);
 
                 list($start, $max) = self::getStartMax($count);
 
-                $messages = $emailsMessages->inbox($arr, $start, $max);
+                $messages = $emailsMessages->inbox($arr, $start, $max, $like);
                 break;
         }
 
