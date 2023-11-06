@@ -1,6 +1,4 @@
-import { InboxArrowDownIcon, BookmarkIcon, StarIcon, ArrowUturnRightIcon, EnvelopeIcon, TrashIcon } from '@heroicons/react/24/solid';
 import Header from './Header';
-import { Link } from "react-router-dom";
 import MobileAside from '../Aside/MobileAside';
 
 const RightSide = ({ Outlet }) => {

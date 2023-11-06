@@ -33,15 +33,15 @@ class Login
         }
     }
 
-    private static function validateAmountOfAttempts()
+    private static function validateAmountOfAttempts(): void
     {
-        $loginAttempts = new M\LoginAttempts;
-
-        if ($loginAttempts->attempts() >= 6) {
-            throw new \Exception("Too many login attempts. Try later.");
-        }
-
-        $loginAttempts->create();
+        validateAmountOfAttempts(
+            new M\Attempts,
+            'contact',
+            300,
+            6,
+            'Too many login attempts. Try later.'
+        );
     }
 
     private static function success(string $nick, object $users): string

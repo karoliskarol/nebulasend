@@ -10,6 +10,7 @@ Route::post('/login/', C\Login::class);
 
 Route::get('/checkAuth/', C\checkAuth::class);
 Route::get('/getStatistics/', C\GetStatistics::class);
+Route::post('/contactSupport/', C\ContactSupport::class);
 
 Route::delete('/logOut/', CA\LogOut::class);
 Route::delete('/logOutAllDevices/', CA\LogOutAllDevices::class);

@@ -89,4 +89,13 @@ function validateIsPasswordCorrect($nick, $pass, $users): void
     }
 }
 
+function validateAmountOfAttempts($attempts, $type, $miliseconds, $amount, $message)
+    {
+        if ($attempts->attempts($type, $miliseconds) >= $amount) {
+            throw new \Exception($message);
+        }
+
+        $attempts->create($type);
+    }
+
 ?>

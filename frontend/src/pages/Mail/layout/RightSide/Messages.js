@@ -38,7 +38,7 @@ const Messages = ({ url, qKey }) => {
     }
 
     const handlePagination = bool => {
-        if (isFetching || (currentPage * 5 >= data?.count && bool)) return;
+        if (isFetching || (currentPage * max >= data?.count && bool)) return;
 
         if (bool) {
             setCurrentPage(prev => prev + 1)
