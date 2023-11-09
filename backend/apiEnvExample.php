@@ -16,4 +16,6 @@ const EMAIL_PASS = "";
 
 const RECAPTCHA_SECRET = "";
 
+const CONTACT_ACCOUNT_ID = "";
+
 ?>

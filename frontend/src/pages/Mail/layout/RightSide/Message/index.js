@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import Star from "./Star";
 import Trash from "./Trash";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MessageContext from "../../../../../contexts/MessageContext";
 
 const Message = ({ msg, qK, setCount }) => {
     const [message, setMessage] = useState(msg);
     const [qKey, setqKey] = useState(qK);
 
-    return (((qKey !== 'trash' && !message.trash) || (qKey === 'trash' && message.trash)) &&
+    return (!!((qKey !== 'trash' && !+message.trash) || (qKey === 'trash' && +message.trash)) &&
         <MessageContext.Provider value={{ message, setMessage, qKey, setCount }}>
             <div className="flex flex-col sm:flex-row sm:justify-between py-2 border border-slate-100 email-message">
                 <Link to={`/mail/read/${message.id}`} className="sm:flex sm:relative data">
@@ -29,5 +29,7 @@ const Message = ({ msg, qK, setCount }) => {
         </MessageContext.Provider>
     );
 }
+
+// ((qKey !== 'trash' && !message.trash) || (qKey === 'trash' && message.trash)) &&
 
 export default Message;

@@ -13,7 +13,7 @@ const Messages = ({ qKey }) => {
 
     const { searchValue } = useContext(RightSideContext);
 
-    const max = 10;
+    const max = 20;
 
     const { data, isFetching, refetch, error } = useQuery([qKey, currentPage],
         () => Get(constructUrl('/getMessages/', [
@@ -35,9 +35,13 @@ const Messages = ({ qKey }) => {
                     key={message.id}
                 />
             );
-        } else if (!isFetching) {
-            return <div className="flex justify-center items-center h-full text-gray-500 text-xl">
-                <FaceFrownIcon className="w-6 h-6 mr-2" />
+        } else if(!isFetching) {
+            return <div className="no-messages">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="mb-1" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path d="M4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm5 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z" />
+                </svg>
+
                 Unfortunataly, there's no messages.
             </div>;
         }
@@ -54,7 +58,7 @@ const Messages = ({ qKey }) => {
     }
 
     useEffect(() => {
-        if (data?.emailsMessages?.length) {
+        if (data && data.emailsMessages) {
             setMessagesCount(data.emailsMessages.length);
         }
     }, [data]);
@@ -72,9 +76,9 @@ const Messages = ({ qKey }) => {
                 handlePagination={handlePagination}
                 data={data}
             />
-            <div className="mt-14 mb-2">
-            {!error && render()}
-            </div>
+            <div className="mt-12 mb-2">
+                {!error && render()}
+            </div >
         </>
     );
 }

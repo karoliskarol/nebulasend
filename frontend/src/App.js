@@ -2,13 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Home from './pages/Home';
 import Mail from './pages/Mail';
-import Inbox from './pages/Mail/Inbox';
-import Starred from './pages/Mail/Starred';
-import Sent from './pages/Mail/Sent';
-import All from './pages/Mail/All';
-import Important from './pages/Mail/Important';
-import Trash from './pages/Mail/Trash';
 import Read from './pages/Mail/Read';
+import Messages from './pages/Mail/layout/RightSide/Messages';
 
 function App() {
   const client = new QueryClient({
@@ -26,12 +21,12 @@ function App() {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='mail' element={<Mail />}>
-              <Route path='inbox' element={<Inbox />} />
-              <Route path='important' element={<Important />} />
-              <Route path='starred' element={<Starred />} />
-              <Route path='sent' element={<Sent />} />
-              <Route path='all' element={<All />} />
-              <Route path='trash' element={<Trash />} />
+              <Route path='important' element={<Messages qKey='important' />} />
+              <Route path='starred' element={<Messages qKey='starred' />} />
+              <Route path='sent' element={<Messages qKey='sent' />} />
+              <Route path='all' element={<Messages qKey='all' />} />
+              <Route path='trash' element={<Messages qKey='trash' />} />
+              <Route path='inbox' element={<Messages qKey='inbox' />} />
               <Route path='read/:id' element={<Read />} />
             </Route>
           </Routes>

@@ -8,13 +8,13 @@ const Star = () => {
     const { message, setMessage, qKey } = useContext(MessageContext);
 
     const { data, mutate } = useMutation(['changeStarring'], id => Put('/changeStarring/', { id: id }).then(() => {
-        message.starred = !message.starred;
+        message.starred = !+message.starred;
         setMessage({ ...message });
     }));
 
     return (qKey !== 'trash' &&
         <StarIcon
-            className={`w-4 h-4 ${message.starred ? 'text-dark-primary' : 'text-blue-800'} cursor-pointer`}
+            className={`w-5 h-5 sm:w-4 sm:h-4 ${+message.starred ? 'text-dark-primary' : 'text-blue-800'} cursor-pointer`}
             onClick={() => mutate(message.id)}
         />
     );

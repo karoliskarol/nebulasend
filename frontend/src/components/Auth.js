@@ -23,10 +23,12 @@ const Auth = ({ children, checkType }) => {
 
     return (
         <>
-        { (data?.auth && checkType) && 
-        <UserContext.Provider value={{ ...data.data, refetch }}>{children}</UserContext.Provider>
-        }
-        { (data && !data?.auth && !checkType) && children }
+            {(data?.auth && checkType) &&
+                <UserContext.Provider value={{ ...data.data, email: `${data.data.nick}@nebulasend.com`, refetch }}>
+                    {children}
+                </UserContext.Provider>
+            }
+            {(data && !data?.auth && !checkType) && children}
         </>
     );
 }

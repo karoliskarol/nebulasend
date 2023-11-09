@@ -22,16 +22,10 @@ const Header = () => {
 
     useEffect(() => {
         unsetAction();
-        console.log(location.pathname);
-
-        if (location.pathname.startsWith('/mail/read/')) {
-
-        }
-
     }, [location?.pathname]);
 
     return (
-        <header className="h-14 z-10 text-blue-800 bg-light shadow-sm flex relative">
+        <header className="main-header h-14 z-20 text-blue-800 bg-light shadow-sm flex relative">
             <div className="mx-auto px-6 w-full flex items-center justify-between">
                 <div className="flex sm:hidden z-10">
                     <label htmlFor="my-drawer" className="cursor-pointer flex items-center">

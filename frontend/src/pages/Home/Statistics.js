@@ -7,7 +7,7 @@ const Statistics = () => {
     return (data &&
         <section className="statistics py-16 bg-gray-200" id="statistics">
             <div className="container m-auto">
-                <h2 className="text-3xl mb-12 font-bold m-auto text-center">Statistics</h2>
+                <h2 className="text-3xl font-bold m-auto mb-12 text-center">Statistics</h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                     <div className="text-center mb-8 md:mb-0">

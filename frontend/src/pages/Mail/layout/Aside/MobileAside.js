@@ -3,7 +3,7 @@ import Content from "./Content";
 
 const MobileAside = () => {
     return (
-        <div className="drawer z-20 sm:hidden">
+        <div className="drawer z-50 sm:hidden">
             <input id="my-drawer" type="checkbox" className="drawer-toggle" />
             <div className="drawer-side">
                 <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay bg-red-50 sm:hidden"></label>

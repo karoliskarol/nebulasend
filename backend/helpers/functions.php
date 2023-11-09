@@ -98,4 +98,9 @@ function validateAmountOfAttempts($attempts, $type, $miliseconds, $amount, $mess
         $attempts->create($type);
     }
 
+function summary($message) {
+    $summary = new \Html2Text\Html2Text($message);
+    return $summary->getText();
+}
+
 ?>

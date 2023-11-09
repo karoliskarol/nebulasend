@@ -21,7 +21,7 @@ const Content = ({ type = 'PC' }) => {
                 {type === 'PC' ? <Links /> : <MobileLinks />}
 
                 <li className="my-8 text-xs flex items-center">
-                    {userData.nick}@nebulasend.com
+                    {userData.email}
                 </li>
             </ul>
         </>

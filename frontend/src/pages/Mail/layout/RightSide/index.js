@@ -12,7 +12,7 @@ const RightSide = ({ Outlet }) => {
                 <MobileAside />
                 <Header />
 
-                <div className="content h-screen">
+                <div className="content">
                     {Outlet}
                 </div>
             </div>

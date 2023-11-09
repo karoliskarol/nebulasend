@@ -45,7 +45,7 @@ button:hover, .button:hover {
   opacity: 0.85;
 }
 
-header.scrolled a:hover {
+header.scrolled a:hover, header.main-header a:hover {
   color: theme('colors.primary') !important;
 }
 
@@ -58,7 +58,7 @@ header {
   position: relative;
   padding: 150px 0 180px;
   background-image: url(./assets/images/bg.jpg);
-  background-size: cover 0;
+  background-size: cover;
   z-index: 2;
 }
 
@@ -129,9 +129,7 @@ input[type="checkbox"]:checked {
 }
 
 .email-iframe {
-  height: calc(100% - 136px);
-  width: calc(100% - 25px);
-  @apply absolute;
+  @apply static grow;
 }
 
 .email-message .data {
@@ -145,6 +143,15 @@ input[type="checkbox"]:checked {
 .modal-box .fixed-alert {
   @apply fixed top-2 left-6;
   width: calc(100% - 3rem);
+}
+
+.no-messages {
+  height: calc(100% - 48px);
+  @apply flex flex-col text-center absolute text-slate-400 w-full text-xl items-center justify-center;
+}
+
+section {
+  scroll-margin-top: 80px;
 }
 
 @responsive {

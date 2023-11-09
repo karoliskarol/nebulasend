@@ -20,15 +20,18 @@ class NewMessage
             $message = $_POST['message'];
 
             self::validateEmail($to);
-            validateLength($subject, 3, 300, 'subject');
+            validateLength($subject, 2, 300, 'subject');
             validateIsEmpty($message, 'Message');
 
             $data = getUserData('id, nick, email_pass, recipient_name');
 
             $args = [$to, $subject, $message, $data];
 
-            self::sendDevelopment(...$args);
-            self::sendProduction(...$args);
+            if ($data['nick'] . '@nebulasend.com' !== $to) {
+                self::sendDevelopment(...$args);
+                self::sendProduction(...$args);
+            }
+
             self::createEmail(...$args);
 
             echo self::success();
@@ -37,22 +40,24 @@ class NewMessage
         }
     }
 
-    private static function validateEmail(string $to): void {
+    private static function validateEmail(string $to): void
+    {
         if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
             throw new Exception("This is not valid email adress.");
-          }
+        }
     }
 
     private static function sendDevelopment(string $to, string $subject, string $message, array $data): void
     {
-        if(!DEV_MODE) return;
+        if (!DEV_MODE)
+            return;
 
         $mail = new PHPMailer(true);
 
         $mail->isSMTP();
         $mail->Host = 'mail.nebulasend.com';
         $mail->SMTPAuth = true;
-        $mail->Username = $data['nick'].'@nebulasend.com';
+        $mail->Username = $data['nick'] . '@nebulasend.com';
         $mail->Password = EMAIL_PASS . $data['email_pass'];
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port = 465;
@@ -67,15 +72,18 @@ class NewMessage
         $mail->send();
     }
 
-    private static function sendProduction(string $to, string $subject, string $message, array $data): void {
-        if(DEV_MODE) return;
+    private static function sendProduction(string $to, string $subject, string $message, array $data): void
+    {
+        if (DEV_MODE)
+            return;
 
-        if(!mail($to, $subject, $message, "From: ".$data['recipient_name']." <".$data['nick']."@nebulasend.com>\r\n")) {
+        if (!mail($to, $subject, $message, "From: " . $data['recipient_name'] . " <" . $data['nick'] . "@nebulasend.com>\r\n")) {
             throw new Exception("Something went wrong while sending email.");
         }
     }
 
-    private static function createEmail(string $to, string $subject, string $message, array $data): void {
+    private static function createEmail(string $to, string $subject, string $message, array $data): void
+    {
         $emails = new M\EmailsMessages;
 
         $emails->create([
@@ -85,17 +93,17 @@ class NewMessage
             'subject' => $subject,
             'recipient' => $data['nick'],
             'message' => $message,
+            'summary' => summary($message),
             'sent_at' => time()
         ]);
     }
 
-    private static function success() {
-        return json_encode(
-            (object) array(
-                'stat' => true,
-                'text' => 'Email was sent successfully.'
-            )
-        );
+    private static function success()
+    {
+        return json_encode([
+            'stat' => true,
+            'text' => 'Email was sent successfully.'
+        ]);
     }
 }
 

@@ -91,11 +91,9 @@ class GetMessages
 
         $to = $overview[0]->to;
 
-        if (str_contains($to, '@nebulasend.com') and str_starts_with($to, '"')) {
-            $matches = [];
-            preg_match('/<(.+?)>/', $to, $matches);
+        if (preg_match('/<([^>]+)>/', $to, $matches)) {
             $to = $matches[1];
-        }
+        } 
 
         return [$recipient, $email, $to];
     }
@@ -111,8 +109,7 @@ class GetMessages
         $replacement = '<a$1 target="_blank">';
         $message = preg_replace($pattern, $replacement, $message);
 
-        $summary = new \Html2Text\Html2Text($message);
-        $summary = $summary->getText();
+        $summary = summary($message);
         $summary = trim(strlen($summary) > 150 ? substr($summary, 0, 150) : $summary);
 
         return [$message, $summary];
@@ -125,22 +122,28 @@ class GetMessages
         }
 
         foreach ($messages as $message) {
-            $emailMessages->create($message);
+            $emailMessages->creaąte($message);
         }
     }
 
     private static function messages(object $emailsMessages, array $data): array
     {
         $a = isset($_GET['a']) ? $_GET['a'] : 'inbox';
-        $search = isset($_GET['search']) ? "'%".$_GET['search']."%'" : '';
-
+        $search = isset($_GET['search']) && !empty($_GET['search']) ? $_GET['search'] : '';
+        
         $arr = [
             ':email' => $data['nick'] . '@nebulasend.com',
-            ':userId' => $data['id']
+            ':userId' => $data['id'],
         ];
 
-        //  OR subject LIKE $search OR sent_by LIKE $search OR sent_to LIKE $search
-        $like = !empty($search) ? "AND (message LIKE $search OR subject LIKE $search OR recipient LIKE $search)" : ''; 
+        $like = '';
+
+        if(!empty($search)) {
+            $arr['search'] = $search;
+
+            $cn = "CONCAT('%', :search, '%')";
+            $like = "AND (message LIKE $cn OR subject LIKE $cn OR recipient LIKE $cn)";
+        }
 
         switch ($a) {
             case 'important':
@@ -202,7 +205,7 @@ class GetMessages
     {
         $page = isset($_GET['page']) ? (int) $_GET['page'] : '';
 
-        $max = 10;
+        $max = 20;
         $start = ($max * $page) - $max;
 
         $max = ($start + $max) > $records ? $records - $start : $max;

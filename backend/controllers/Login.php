@@ -37,7 +37,7 @@ class Login
     {
         validateAmountOfAttempts(
             new M\Attempts,
-            'contact',
+            'Login',
             300,
             6,
             'Too many login attempts. Try later.'
