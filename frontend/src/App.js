@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Mail from './pages/Mail';
 import Read from './pages/Mail/Read';
 import Messages from './pages/Mail/layout/RightSide/Messages';
+import { useEffect } from 'react';
 
 function App() {
   const client = new QueryClient({
@@ -13,6 +14,12 @@ function App() {
       }
     }
   });
+
+  useEffect(() => {
+    if (window.location.href.indexOf('www.') > -1) {
+      window.location.href = window.location.href.replace('www.', '');
+    }
+  }, []);
 
   return (
     <div className="app">

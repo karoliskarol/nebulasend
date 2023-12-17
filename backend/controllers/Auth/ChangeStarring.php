@@ -26,7 +26,7 @@ class ChangeStarring
 
     private static function success(object $emailsMessages, string $id): string
     {
-        $emailsMessages->changeStatus('starred=!starred', $id);
+        $emailsMessages->changeStatus(DEV_MODE ? 'starred=!starred' : 'starred = NOT starred', $id);
 
         return json_encode([
             'stat' => true,

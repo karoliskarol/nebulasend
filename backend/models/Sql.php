@@ -19,6 +19,7 @@ class Sql
         try {
             self::$conn = new PDO("mysql:host=".SERVER_NAME.";dbname=". DB, USERNAME, PASSWORD);
             self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            self::$conn->exec("set names utf8mb4");
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }

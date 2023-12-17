@@ -25,11 +25,11 @@ class MoveTrashBin
     }
 
     private static function success($emailsMessages, $id) {
-        $emailsMessages->changeStatus('trash=!trash', $id);
+        $emailsMessages->changeStatus(DEV_MODE ? 'trash=!trash' : 'trash = NOT trash', $id);
 
         return json_encode([
             'stat' => true,
-            'text' => 'Logged out of account successfuly.'
+            'text' => 'Action is successfull.'
         ]);
     }
 }

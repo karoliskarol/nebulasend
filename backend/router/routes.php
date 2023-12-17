@@ -8,7 +8,7 @@ use Controllers\Auth\Settings as CAS;
 Route::post('/registration/', C\Registration::class);
 Route::post('/login/', C\Login::class);
 
-Route::get('/checkAuth/', C\checkAuth::class);
+Route::get('/checkAuth/', C\CheckAuth::class);
 Route::get('/getStatistics/', C\GetStatistics::class);
 Route::post('/contactSupport/', C\ContactSupport::class);
 

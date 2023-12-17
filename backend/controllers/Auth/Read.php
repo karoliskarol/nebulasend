@@ -14,6 +14,8 @@ class Read
             $emailsMessages = new M\EmailsMessages;
 
             $id = isset($_GET['id']) ? $_GET['id'] : '';
+
+            validateRecordBelonging($emailsMessages->fetchUserId($id), null);
             $read = $emailsMessages->fetchById($id);
 
             self::validateExec($read);

@@ -31,7 +31,7 @@ class GetMessages
     {
         $username = $data['nick'] . '@nebulasend.com';
         $password = EMAIL_PASS . $data['email_pass'];
-        $hostname = '{mail.nebulasend.com:993/imap/ssl}INBOX';
+        $hostname = '{mail.nebulasend.com:993/imap/ssl/novalidate-cert}INBOX';
 
         try {
             $inbox = imap_open($hostname, $username, $password);
@@ -69,7 +69,7 @@ class GetMessages
                 'sent_by' => $email,
                 'sent_to' => $to,
                 'subject' => mb_decode_mimeheader($overview[0]->subject),
-                'recipient' => $recipient,
+                'recipient' => mb_decode_mimeheader($recipient),
                 'message' => $message,
                 'summary' => $summary,
                 'important' => $overview[0]->flagged,
@@ -122,7 +122,7 @@ class GetMessages
         }
 
         foreach ($messages as $message) {
-            $emailMessages->creaąte($message);
+            $emailMessages->create($message);
         }
     }
 
