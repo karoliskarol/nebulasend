@@ -5,9 +5,9 @@ import { useMutation } from '@tanstack/react-query';
 import ReCAPTCHA from "react-google-recaptcha";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Post from "../../../api/post";
-import Alert from "../../../components/ui/Alert";
-import { passValidation } from "../../../utils/yupValidations";
+import Post from "api/post";
+import Alert from "components/ui/Alert";
+import { passValidation } from "utils/yupValidations";
 
 const Registration = ({ setAction }) => {
     const [captcha, setCaptcha] = useState(null);

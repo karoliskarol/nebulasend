@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { FaceFrownIcon } from "@heroicons/react/24/solid";
 import { useContext, useEffect, useState } from "react";
 import Menu from "./Menu";
-import Get from "../../../../api/get";
+import Get from "api/get";
 import Message from "./Message";
-import RightSideContext from "../../../../contexts/RightSideContext";
-import constructUrl from "../../../../utils/constructUrl";
+import RightSideContext from "contexts/RightSideContext";
+import constructUrl from "utils/constructUrl";
 
 const Messages = ({ qKey }) => {
     const [messagesCount, setMessagesCount] = useState(0);

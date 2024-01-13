@@ -2,10 +2,10 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import Put from "../../../../../api/put";
-import Alert from "../../../../../components/ui/Alert";
+import Put from "api/put";
+import Alert from "components/ui/Alert";
 import { useContext } from "react";
-import UserContext from "../../../../../contexts/UserContext";
+import UserContext from "contexts/UserContext";
 
 const ChangeRecipient = () => {
     const userData = useContext(UserContext);

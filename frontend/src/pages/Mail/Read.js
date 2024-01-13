@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
-import Get from "../../api/get";
-import UserContext from "../../contexts/UserContext";
+import Get from "api/get";
+import UserContext from "contexts/UserContext";
 
 const Read = () => {
     const { id } = useParams();

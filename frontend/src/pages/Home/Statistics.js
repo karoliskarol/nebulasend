@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import Get from "../../api/get";
+import Get from "api/get";
 
 const Statistics = () => {
     const { data } = useQuery(['getStatistics'], () => Get('/getStatistics/'));

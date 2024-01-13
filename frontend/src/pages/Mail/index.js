@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import Auth from "../../components/Auth";
+import Auth from "components/Auth";
 import Aside from "./layout/Aside";
 import RightSide from "./layout/RightSide";
 import Modals from "./layout/Modals";

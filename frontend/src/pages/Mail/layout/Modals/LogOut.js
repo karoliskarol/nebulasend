@@ -1,5 +1,5 @@
-import Modal from "../../../../components/ui/Modal";
-import Delete from "../../../../api/delete";
+import Modal from "components/ui/Modal";
+import Delete from "api/delete";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";

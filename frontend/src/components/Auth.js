@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import Get from "../api/get";
-import UserContext from "../contexts/UserContext";
+import Get from "api/get";
+import UserContext from "contexts/UserContext";
 
 const Auth = ({ children, checkType }) => {
     const navigate = useNavigate();

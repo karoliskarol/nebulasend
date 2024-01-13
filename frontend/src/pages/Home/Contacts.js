@@ -3,8 +3,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
-import Post from '../../api/post';
-import Alert from '../../components/ui/Alert';
+import Post from 'api/post';
+import Alert from 'components/ui/Alert';
 
 const Contacts = () => {
     const { data, mutate, isLoading, isError } = useMutation(['contactSupport'], inputs => Post('/contactSupport/', inputs));

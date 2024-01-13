@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Star from "./Star";
 import Trash from "./Trash";
 import { useEffect, useState } from "react";
-import MessageContext from "../../../../../contexts/MessageContext";
+import MessageContext from "contexts/MessageContext";
 
 const Message = ({ msg, qK, setCount }) => {
     const [message, setMessage] = useState(msg);

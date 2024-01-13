@@ -1,4 +1,4 @@
-import Modal from "../../../../../components/ui/Modal";
+import Modal from "components/ui/Modal";
 import ChangePassword from "./ChangePassword";
 import ChangeRecipient from "./ChangeRecipient";
 

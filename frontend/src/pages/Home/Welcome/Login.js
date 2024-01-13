@@ -3,8 +3,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import Post from "../../../api/post";
-import Alert from "../../../components/ui/Alert";
+import Post from "api/post";
+import Alert from "components/ui/Alert";
 import { useEffect } from "react";
 
 const Login = ({ setAction }) => {

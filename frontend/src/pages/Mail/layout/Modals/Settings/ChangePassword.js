@@ -2,9 +2,9 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Put from "../../../../../api/put";
-import { passValidation } from "../../../../../utils/yupValidations";
-import Alert from "../../../../../components/ui/Alert";
+import Put from "api/put";
+import { passValidation } from "utils/yupValidations";
+import Alert from "components/ui/Alert";
 
 const ChangePassword = () => {
     const { data, isError, mutate, isLoading } = useMutation(['changePassword'], inputs => Put('/settings/changePassword/', inputs));

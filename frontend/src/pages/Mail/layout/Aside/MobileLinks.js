@@ -1,5 +1,5 @@
 import { InboxArrowDownIcon, BookmarkIcon, StarIcon, ArrowUturnRightIcon, EnvelopeIcon, TrashIcon, Cog6ToothIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const MobileLinks = () => {
     const navigate = useNavigate();

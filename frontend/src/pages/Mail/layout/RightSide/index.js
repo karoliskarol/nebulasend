@@ -1,6 +1,6 @@
 import Header from './Header';
 import MobileAside from '../Aside/MobileAside';
-import RightSideContext from "../../../../contexts/RightSideContext";
+import RightSideContext from "contexts/RightSideContext";
 import { useState } from 'react';
 
 const RightSide = ({ Outlet }) => {

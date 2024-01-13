@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import calculateDisplayTime from "../../utils/calculateDisplayTime";
+import calculateDisplayTime from "utils/calculateDisplayTime";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import useAlertProgress from "../../hooks/useAlertProgress";
+import useAlertProgress from "hooks/useAlertProgress";
 
 const Alert = ({ stat = false, text = "Something went wrong.", fixed, timeout }) => {
     const [show, setShow] = useState(true);

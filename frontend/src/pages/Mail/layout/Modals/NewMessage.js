@@ -3,9 +3,9 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
-import Post from "../../../../api/post";
-import Modal from "../../../../components/ui/Modal";
-import Alert from "../../../../components/ui/Alert";
+import Post from "api/post";
+import Modal from "components/ui/Modal";
+import Alert from "components/ui/Alert";
 
 const NewMessage = () => {
     const { data, mutate, isLoading, isError } = useMutation(['newMessage'], inputs => Post('/newMessage/', inputs));

@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import Modal from "../../../../components/ui/Modal";
-import Delete from "../../../../api/delete";
+import Modal from "components/ui/Modal";
+import Delete from "api/delete";
 
 const ConfirmDeletion = ({ id, message, setMessage, setCount }) => {
     const { data, isLoading, mutate } = useMutation(['deleteMessage'], id => Delete('/deleteMessage/', { id: id }).then(() => {

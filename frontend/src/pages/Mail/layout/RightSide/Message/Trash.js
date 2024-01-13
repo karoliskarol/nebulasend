@@ -1,8 +1,8 @@
 import { InboxArrowDownIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { useContext } from "react";
-import MessageContext from "../../../../../contexts/MessageContext";
+import MessageContext from "contexts/MessageContext";
 import { useMutation } from "@tanstack/react-query";
-import Put from "../../../../../api/put";
+import Put from "api/put";
 import ConfirmDeletion from "../../Modals/ConfirmDeletion";
 
 const Trash = () => {

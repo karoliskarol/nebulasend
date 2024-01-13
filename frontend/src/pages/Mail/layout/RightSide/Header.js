@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon, Cog6ToothIcon, ArrowTopRightOnSquareIcon, Bars3Ico
 import { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
-import RightSideContext from '../../../../contexts/RightSideContext';
+import RightSideContext from 'contexts/RightSideContext';
 
 const Header = () => {
     const { searchValue, setSearchValue } = useContext(RightSideContext);

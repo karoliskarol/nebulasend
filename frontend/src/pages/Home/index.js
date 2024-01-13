@@ -4,7 +4,7 @@ import About from './About';
 import Statistics from './Statistics';
 import Footer from './Footer';
 import Contacts from './Contacts';
-import Auth from '../../components/Auth';
+import Auth from 'components/Auth';
 
 const Home = () => {
     return (

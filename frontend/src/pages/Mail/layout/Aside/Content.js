@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import Links from "./Links";
 import MobileLinks from "./MobileLinks";
-import UserContext from "../../../../contexts/UserContext";
+import UserContext from "contexts/UserContext";
 
 const Content = ({ type = 'PC' }) => {
     const userData = useContext(UserContext);
